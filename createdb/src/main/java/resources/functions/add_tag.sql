@@ -7,4 +7,4 @@ BEGIN
 INSERT INTO tags(name) VALUES(na) RETURNING name INTO msg;
 return 'Succesfully added '||msg||'.';
 END;
-$$;
+$$;;

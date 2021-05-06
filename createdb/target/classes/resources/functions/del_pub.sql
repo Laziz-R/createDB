@@ -7,4 +7,4 @@ begin
 delete from publishers where id=p_id returning name into msg;
 return 'Succesfully deleted '|| msg||'.';
 end;
-$$;
+$$;;

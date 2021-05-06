@@ -7,4 +7,4 @@ begin
 delete from tags where id=t_id returning name into msg;
 return 'Succesfully deleted '|| msg ||'.';
 end;
-$$;
+$$;;

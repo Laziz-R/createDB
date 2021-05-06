@@ -10,4 +10,4 @@ RETURNING name INTO msg;
 
 return 'Succesfully added '||msg||'.';
 END;
-$$;
+$$;;

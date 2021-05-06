@@ -7,4 +7,4 @@ begin
 update comments set author = au, text = txt, book_id = b_id where id=c_id returning author into msg;
 return 'Succesfully updated (by '||msg||')';
 end;
-$$;
+$$;;

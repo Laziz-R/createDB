@@ -8,4 +8,4 @@ INSERT INTO comments(author, text, book_id, posted_time) VALUES(au, txt, b_id, n
 RETURNING author INTO msg;
 return 'Succesfully posted by '||msg||'.';
 END;
-$$;
+$$;;

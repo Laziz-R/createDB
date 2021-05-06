@@ -7,4 +7,4 @@ begin
 update tags set name = na where id=t_id returning name into msg;
 return 'Succesfully updated '||msg||'.';
 end;
-$$;
+$$;;

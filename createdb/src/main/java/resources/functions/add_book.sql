@@ -15,4 +15,4 @@ END LOOP;
 END IF;
 return 'Succesfully added '||msg||'.';
 END;
-$$;
+$$;;

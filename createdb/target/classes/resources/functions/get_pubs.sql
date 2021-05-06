@@ -4,4 +4,4 @@ CREATE FUNCTION get_pubs() RETURNS TABLE("like" publishers)
 begin
 return query select * from publishers;
 end
-$$;
+$$;;

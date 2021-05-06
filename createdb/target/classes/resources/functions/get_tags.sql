@@ -4,4 +4,4 @@ CREATE FUNCTION get_tags() RETURNS TABLE("like" tags)
 begin
 return query select * from tags;
 end
-$$;
+$$;;

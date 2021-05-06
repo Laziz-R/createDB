@@ -8,4 +8,4 @@ update books set name = na, author = au, pub_id = p_id, pub_year = p_year, isbn 
 			where id=b_id returning name into msg;
 return 'Succesfully updated '||msg||'.';
 end;
-$$;
+$$;;

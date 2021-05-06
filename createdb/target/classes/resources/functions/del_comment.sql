@@ -7,4 +7,4 @@ begin
 delete from comments where id=c_id returning author into msg;
 return 'Succesfully deleted (by '||msg||')';
 end;
-$$;
+$$;;

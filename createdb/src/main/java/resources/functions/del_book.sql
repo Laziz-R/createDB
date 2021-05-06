@@ -7,4 +7,4 @@ begin
 delete from books where id=b_id returning name into msg;
 return 'Succesfully deleted ' || msg ||'.';
 end;
-$$;
+$$;;

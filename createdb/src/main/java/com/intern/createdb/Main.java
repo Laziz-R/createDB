@@ -26,32 +26,29 @@ public class Main
         sr.setAutoCommit(true);
         sr.setStopOnError(true);
 
-        // // CREATE DB
-        // Reader reader = new BufferedReader(new FileReader(path+"/createDB.sql"));
-        // sr.runScript(reader);
-        // con.close();
+        // CREATE DB
+        Reader reader = new BufferedReader(new FileReader(path+"/createDB.sql"));
+        sr.runScript(reader);
+        con.close();
 
-        // con = DriverManager.getConnection(URL+"library", USER, PASS);
-        // sr = new ScriptRunner(con);
+        con = DriverManager.getConnection(URL+"library", USER, PASS);
+        sr = new ScriptRunner(con);
 
-        // // CREATE TABLES
-        // for(File file: new File(path+"tables/").listFiles()){
-        //     if(file.getName().equals("ending.sql")) continue;
-        //     reader = new BufferedReader(new FileReader(file));
-        //     sr.runScript(reader);
-        // }
-        // reader = new BufferedReader(new FileReader(path+"tables/ending.sql"));
-        // sr.runScript(reader);
-
-        // CREATE FUNCTIONS
-        // for(File file: new File(path+"functions/").listFiles()){
-        //     reader = new BufferedReader(new FileReader(file));
-        //     sr.runScript(reader);
-        //     Thread.sleep(1000);
-        // }
-        Reader reader = new BufferedReader(new FileReader(path+"functions/test.sql"));
+        // CREATE TABLES
+        for(File file: new File(path+"tables/").listFiles()){
+            if(file.getName().equals("ending.sql")) continue;
+            reader = new BufferedReader(new FileReader(file));
+            sr.runScript(reader);
+        }
+        reader = new BufferedReader(new FileReader(path+"tables/ending.sql"));
         sr.runScript(reader);
 
+        // CREATE FUNCTIONS
+        sr.setDelimiter(";;");
+        for(File file: new File(path+"functions/").listFiles()){
+            reader = new BufferedReader(new FileReader(file));
+            sr.runScript(reader);
+        }
 
     }
 }

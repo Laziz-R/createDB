@@ -7,4 +7,4 @@ begin
 update publishers set name = na, address = ad, phone = ph where id=p_id returning name into msg;
 return 'Succesfully updated '||msg||'.';
 end;
-$$;
+$$;;

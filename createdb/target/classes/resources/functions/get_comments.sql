@@ -4,4 +4,4 @@ CREATE FUNCTION get_comments() RETURNS TABLE("like" comments)
 begin
 return query select * from comments;
 end
-$$;
+$$;;
