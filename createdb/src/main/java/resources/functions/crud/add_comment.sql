@@ -1,4 +1,4 @@
-CREATE FUNCTION public.add_comment(au character varying, txt character varying, b_id integer) RETURNS character varying
+CREATE FUNCTION public.add_comment(au character varying, b_id integer, txt character varying) RETURNS character varying
     LANGUAGE plpgsql
     AS $$
 DECLARE 

@@ -29,8 +29,8 @@ public class Main {
             sr.setAutoCommit(true);
             sr.setStopOnError(true);
 
-            // CREATE DB
-            Reader reader = new BufferedReader(new FileReader(path + "/createDB.sql"));
+            // CREATE db
+            Reader reader = new BufferedReader(new FileReader(path + "/create_db.sql"));
             try {
                 sr.runScript(reader);
             } catch (Exception e) {
@@ -41,7 +41,7 @@ public class Main {
             con = DriverManager.getConnection(URL + "library", USER, PASS);
             sr = new ScriptRunner(con);
 
-            // CREATE TABLES
+            // CREATE tables
             for (File file : new File(path + "tables/").listFiles()) {
                 if (file.getName().equals("ending.sql"))
                     continue;
@@ -54,11 +54,16 @@ public class Main {
                 }
             }
             reader = new BufferedReader(new FileReader(path + "tables/ending.sql"));
-            sr.runScript(reader);
+            try {
+                sr.runScript(reader);
+            } catch (Exception e) {
+                System.err.println(e.toString());
+                return;
+            }
 
-            // CREATE FUNCTIONS
             sr.setDelimiter(";;");
-            for (File file : new File(path + "functions/").listFiles()) {
+            // CREATE crud functions
+            for (File file : new File(path + "functions/crud/").listFiles()) {
                 reader = new BufferedReader(new FileReader(file));
                 try {
                     sr.runScript(reader);
@@ -68,8 +73,14 @@ public class Main {
                 }
             }
 
-            System.out.println("==== Succesfully created schema ====\n");
-
+            // INSERT data
+            reader = new BufferedReader(new FileReader(path+"insert_data.sql"));
+            try {
+                sr.runScript(reader);
+            } catch (Exception e) {
+                System.err.println(e.toString());
+                return;
+            }            
         }
 
     }
