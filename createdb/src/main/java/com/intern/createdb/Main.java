@@ -8,7 +8,6 @@ import java.io.Reader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Scanner;
 
 import org.apache.ibatis.jdbc.ScriptRunner;
