@@ -19,7 +19,7 @@ public class Main {
 
     public static void main(String[] args) throws SQLException, InterruptedException, IOException {
         Properties props = new Properties();
-        props.load(new FileInputStream(path+"config.properties"));
+        props.load(new FileInputStream(path + "config.properties"));
 
         final String URL = props.getProperty("URL");
         final String USER = props.getProperty("USER");
@@ -30,7 +30,7 @@ public class Main {
         ScriptRunner sr = new ScriptRunner(con);
         Reader reader;
 
-        System.out.print("DROP and CREATE? (Y/N): ");
+        System.out.print("DROP and CREATE schema? (Y/N): ");
         if (sc.next().equalsIgnoreCase("Y")) {
             sr.setAutoCommit(true);
             sr.setStopOnError(true);
@@ -74,18 +74,21 @@ public class Main {
                     System.err.println(e.toString());
                 }
             }
+        }
 
-            // INSERT data
-            reader = new BufferedReader(new FileReader(path+"insert_data.sql"));
+        // INSERT data
+        System.out.print("Insert data? (Y/N): ");
+        if (sc.next().equalsIgnoreCase("Y")) {
+            reader = new BufferedReader(new FileReader(path + "insert_data.sql"));
             try {
                 sr.runScript(reader);
             } catch (Exception e) {
                 System.err.println(e.toString());
-            }            
+            }
         }
-
+        
         System.out.print("Run other? (Y/N): ");
-        if(sc.next().equalsIgnoreCase("Y")){
+        if (sc.next().equalsIgnoreCase("Y")) {
             con = DriverManager.getConnection(URL + "library", USER, PASS);
             sr = new ScriptRunner(con);
             for (File file : new File(path + "others/").listFiles()) {
