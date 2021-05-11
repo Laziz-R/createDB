@@ -3,7 +3,6 @@ package com.intern.createdb;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
@@ -28,20 +27,20 @@ public class Main {
 
         Scanner sc = new Scanner(System.in);
         Connection con = DriverManager.getConnection(URL, USER, PASS);
+        ScriptRunner sr = new ScriptRunner(con);
+        Reader reader;
 
         System.out.print("DROP and CREATE? (Y/N): ");
         if (sc.next().equalsIgnoreCase("Y")) {
-            ScriptRunner sr = new ScriptRunner(con);
             sr.setAutoCommit(true);
             sr.setStopOnError(true);
 
             // CREATE db
-            Reader reader = new BufferedReader(new FileReader(path + "/create_db.sql"));
+            reader = new BufferedReader(new FileReader(path + "/create_db.sql"));
             try {
                 sr.runScript(reader);
             } catch (Exception e) {
                 System.err.println(e.toString());
-                return;
             }
 
             con = DriverManager.getConnection(URL + "library", USER, PASS);
@@ -56,7 +55,6 @@ public class Main {
                     sr.runScript(reader);
                 } catch (Exception e) {
                     System.err.println(e.toString());
-                    return;
                 }
             }
             reader = new BufferedReader(new FileReader(path + "tables/ending.sql"));
@@ -64,18 +62,16 @@ public class Main {
                 sr.runScript(reader);
             } catch (Exception e) {
                 System.err.println(e.toString());
-                return;
             }
 
             sr.setDelimiter(";;");
-            // CREATE crud functions
-            for (File file : new File(path + "functions/crud/").listFiles()) {
+            // CREATE functions
+            for (File file : new File(path + "functions/").listFiles()) {
                 reader = new BufferedReader(new FileReader(file));
                 try {
                     sr.runScript(reader);
                 } catch (Exception e) {
                     System.err.println(e.toString());
-                    return;
                 }
             }
 
@@ -85,8 +81,22 @@ public class Main {
                 sr.runScript(reader);
             } catch (Exception e) {
                 System.err.println(e.toString());
-                return;
             }            
+        }
+
+        System.out.print("Run other? (Y/N): ");
+        if(sc.next().equalsIgnoreCase("Y")){
+            con = DriverManager.getConnection(URL + "library", USER, PASS);
+            sr = new ScriptRunner(con);
+            for (File file : new File(path + "others/").listFiles()) {
+                reader = new BufferedReader(new FileReader(file));
+                try {
+                    sr.runScript(reader);
+                } catch (Exception e) {
+                    System.err.println(e.toString());
+                    return;
+                }
+            }
         }
 
     }
